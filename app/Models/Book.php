@@ -17,7 +17,6 @@ class Book extends Model
         'publishedDate',
         'description',
         'image',
-        'publishedDate',
         'language',
         'city',
         'state', 
