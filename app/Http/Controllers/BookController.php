@@ -74,7 +74,28 @@ class BookController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $book = ModelsBook::find($id);
+
+        if (!$book) {
+            return response()->json(['message' => 'Book not found'], 404);
+        }
+
+        $validatedData = $request->validate([
+            'title' => 'sometimes|required|string',
+            'author' => 'sometimes|required|string',
+            'publication_year' => 'sometimes|required|integer',
+            'description' => 'sometimes|required|string',
+            'image' => 'sometimes|required|string',
+            'publishedDate' => 'sometimes|required|string',
+            'language' => 'sometimes|required|string',
+            'city' => 'sometimes|required|string',
+            'state' => 'sometimes|required|string',
+            'neighborhood' => 'sometimes|required|string'
+        ]);
+
+        $book->update($validatedData);
+
+        return response()->json($book, 200);
     }
 
     /**
@@ -83,6 +104,7 @@ class BookController extends Controller
     public function destroy(string $id)
     {
         $book = ModelsBook::find($id);
+        
 
         if (!$book) {
             return response()->json(['message' => "book not found", 404]);
